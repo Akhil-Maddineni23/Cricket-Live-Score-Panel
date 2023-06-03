@@ -521,7 +521,7 @@ app.get("/wicket" , function(req , res){
     })
 });
 app.get("/toss" , function(req , res){
-    res.render("Toss" , {
+    res.render("toss" , {
         title : "Toss",
         team1 : newMatchData.team1Name,
         team2 : newMatchData.team2Name
