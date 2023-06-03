@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet"  href="css/styles.css">
+    <title><%= title %></title>
+
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="">CricPanel</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="">Home</a>
+                        <a class="nav-item nav-link" href="">New Match</a>
+                        <a class="nav-item nav-link" href="">Start Innings</a>
+                        <a class="nav-item nav-link" href="">Live Score</a>
+                        <a class="nav-item nav-link" href="/scoreboard">Score Board</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="">Schedule</a>
+                        <a class="nav-item nav-link" href="">Account</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</head>
+<body>
+
+
+
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container">
+               <span class="d-block p-2 bg-dark text-white">
+                   <%= matchdetails.team1Name %> &nbsp;&nbsp;&nbsp; v/s &nbsp;&nbsp; <%= matchdetails.team2Name %>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Innings No : <%= batinningsScore.inningsNo %>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Toss Won : <%= matchdetails.tossWonBy %>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Choose to : <%= matchdetails.tossResult %>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>
+               
+                <% if( batinningsScore.inningsNo  == 2){ %>
+                    <span class="d-block p-2 bg-info text-white">
+                    Target : <%= target %>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Required <%= target - batinningsScore.totalScore %> From 
+                    <%= Number(matchdetails.noofOvers)*6 - ((curroverinningsscore.currOverNo - 1)*6 +curroverinningsscore.currOverBalls) %> 
+                    Balls
+                    </span>
+                <% } %>
+
+               <br>
+               <span class="d-block p-2 bg-info text-white"> 
+                <%= batinningsScore.batteamName %>
+                &nbsp;&nbsp;&nbsp;
+                Total Score = <%= batinningsScore.totalScore %> / <%= batinningsScore.totalWickets %>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Overs = <%= curroverinningsscore.currOverNo - 1 %>.<%= curroverinningsscore.currOverBalls %> / <%= matchdetails.noofOvers %>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Over Timeline : <%= curroverinningsscore.currOverTimeline %> = <%= curroverinningsscore.currOverScore %>
+
+               </span>
+               <br>
+               <form  action="/live_score" method = "post">
+                   <!-- Extras :-->
+                   <div class="col-md-50">
+                           &nbsp;&nbsp;&nbsp;&nbsp;
+                           <input class="form-check-input" type="checkbox" value=1 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckDefault">
+                               Wide
+                           </label>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                           <input class="form-check-input" type="checkbox" value=2 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckChecked">
+                               No Ball
+                           </label>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                           <input class="form-check-input" type="checkbox" value=3 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckChecked">
+                               Byes
+                           </label>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                           <input class="form-check-input" type="checkbox" value=4 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckChecked">
+                               Leg Byes
+                           </label>
+                       
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <input class="form-check-input" type="checkbox" value=5 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckChecked">
+                               Wicket
+                           </label>
+                       
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <input class="form-check-input" type="checkbox" value=6 id="flexCheckChecked" name="mycheckbox">
+                           <label class="form-check-label" for="flexCheckChecked">
+                               Retire Out   
+                   </div>
+                   <br>
+           
+                   <!-- Current Batsman's-->
+                   <div class="form-check">
+                       <input class="form-check-input" type="radio" name="batsman" value="<%= batsman1.name %>" required>
+                       <label class="form-check-label" for="flexRadioDefault1">
+                        <%= batsman1.name %>
+                       </label>
+                   </div>
+                   <div class="form-check">
+                       <input class="form-check-input" type="radio" name="batsman" value="<%= batsman2.name %>" required>
+                       <label class="form-check-label" for="flexRadioDefault2">
+                        <%= batsman2.name %>
+                       </label>
+                   </div>
+           
+                   <br>
+                   <!-- Score Entering Buttons-->
+                   <button type="submit" class="btn btn-outline-primary" name="run" value=0>0</button>
+                   <button type="submit" class="btn btn-outline-secondary" name="run" value=1>1</button>
+                   <button type="submit" class="btn btn-outline-success" name="run" value=2>2</button>
+                   <button type="submit" class="btn btn-outline-danger" name="run" value=3>3</button>
+                   <button type="submit" class="btn btn-outline-warning" name="run" value=4>4</button>
+                   <button type="submit" class="btn btn-outline-info" name="run" value=5>5</button>
+                   <button type="submit" class="btn btn-outline-primary" name="run" value=6>6</button>
+               </form>
+           </div>
+           
+           <div class="container">
+                <!-- Current Batsman's Score Display-->
+               <table class="table table-hover table-borderless table-light my-4">
+                   <thead class="thead-dark">
+                       <tr>
+                           <th scope="col">BatsMan Name</th>
+                           <th scope="col">Runs</th>
+                           <th scope="col">Balls</th>
+                           <th scope="col">4's</th>
+                           <th scope="col">6's</th>
+                           <th scope="col">Strike Rate</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+           
+                       <tr>
+                           <th scope="row"><%= batsman1.name %></th>
+                           <td><%= batsman1.runs %></td>
+                           <td><%= batsman1.balls %></td>
+                           <td><%= batsman1.fours %></td>
+                           <td><%= batsman1.sixes %></td>
+                           <td><%= batsman1.strikeRate %></td>
+                       </tr>
+                       <tr>
+                        <th scope="row"><%= batsman2.name %></th>
+                           <td><%= batsman2.runs %></td>
+                           <td><%= batsman2.balls %></td>
+                           <td><%= batsman2.fours %></td>
+                           <td><%= batsman2.sixes %></td>
+                           <td><%= batsman2.strikeRate %></td>
+                       </tr>  
+                   </tbody>
+               </table>
+           </div>
+           
+           <div class="container">
+               <!-- Current Bowler Over Display-->
+               <table class="table table-hover my-4">
+                   <thead class="thead-dark">
+                       <tr>
+                           <th scope="col">Bowler Name</th>
+                           <th scope="col">Overs</th>
+                           <th scope="col">Maidens</th>
+                           <th scope="col">Score</th>
+                           <th scope="col">Wickets</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <tr>
+                           <th scope="row"><%= bowler.name %></th>
+                           <td><%= bowler.overs %>.<%= bowler.balls %></td>
+                           <td><%= bowler.maidens %></td>
+                           <td><%= bowler.runs %></td>
+                           <td><%= bowler.wickets %></td>
+                       </tr>
+                   </tbody>
+               </table>
+           </div>
+
+            
+        </div>
+        <div class="col-md-4">
+            <div class="container">
+                <!-- Extras Display-->
+                <table class="table table-hover my-4">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><%= extras.bowlteamName %></th>
+                            <th scope="col">Extras</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Wides</th>
+                            <td><%= extras.wides %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">No Balls</th>
+                            <td><%= extras.noballs %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Byes</th>
+                            <td><%= extras.byes %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Leg Byes</th>
+                            <td><%= extras.legbyes %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total</th>
+                            <td><%= extras.total %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container">
+                <!-- Fall of Wickets Display-->
+                <table class="table table-hover my-4">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Fall of Wickets</th>
+                            <th scope="col">Time of Fall</th>
+                            <th scope="col">Team Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% wicketsfallen.forEach(function(fallen){ %>
+                        <tr>
+                            <th scope="row"><%= fallen.batsmanName %></th>
+                            <td><%= fallen.overNo %></td>
+                            <td><%= fallen.score %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div> 
+        </div>   
+    </div>
+</main>
+

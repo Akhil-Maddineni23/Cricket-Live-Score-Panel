@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet"  href="css/styles.css">
+    <title><%= title %></title>
+
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="">CricPanel</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="">Home</a>
+                        <a class="nav-item nav-link" href="">New Match</a>
+                        <a class="nav-item nav-link" href="">Start Innings</a>
+                        <a class="nav-item nav-link" href="">Live Score</a>
+                        <a class="nav-item nav-link" href="">Score Board</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="">Schedule</a>
+                        <a class="nav-item nav-link" href="">Account</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</head>
+<body>
+
+<div class="col-md-8">
+    <div class="content-section">
+        <form  action="/start_innings" , method = "post">
+        
+            <fieldset class="form-group">
+                <span class="d-block p-2 bg-info text-white">Let's Begin our Innings!..</span>
+                <br>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Batsman1 Name</span>
+                        <input type="text" class="form-control" placeholder="Enter striker Name" name="batsman1Name" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Batsman2 Name</span>
+                        <input type="text" class="form-control" placeholder="Enter non striker name" name="batsman2Name" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Strike Bowler Name</span>
+                        <input type="text" class="form-control" placeholder="Enter striker bowler name" name="bowlerName" autocomplete="off" required>
+                    </div>
+                </div>
+            
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Let's PLay</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer") -%>
